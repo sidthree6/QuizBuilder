@@ -1,4 +1,5 @@
 <?php
+include("db.php");
 include("class/template.php");
 
 $scripts = array("main.js","http://code.jquery.com/jquery-latest.min.js");
