@@ -102,11 +102,11 @@ $template->sidebarBlock($isAdmin);
 	$count = 1;
 	?>    
     <table cellspacing="0">
-    <tr><th style="width:10px">Index</th><th>Title</th><th style="width:20px">Creation Date</th><th style="width:50px">Action</th></tr>
+    	<tr><th style="width:10px">Index</th><th>Title</th><th style="width:20px">Creation Date</th><th style="width:50px">Action</th></tr>
     <?php
 	foreach($catagory as $result)
 	{		
-		echo "<tr><td>$count</td><td class=\"catagory_title\">".$result["title"]."</td><td>".$result["datecreated"]."</td><td><img src=\"images/edit.png\" id=\"catagory_edit\"/> <img src=\"images/delete.png\" /></td></tr>";
+		echo "\t<tr><td>$count</td><td id=\"catagory_title_".$count."\">".$result["title"]."</td><td>".$result["datecreated"]."</td><td id=\"buttons\"><img src=\"images/edit.png\" class=\"edit\" id=\"catagory_title_".$count."\" /> <img src=\"images/delete.png\"/></td></tr>\n";
 		$count++;
 	}
 	?>
