@@ -11,8 +11,10 @@ body
 .main
 {	
 	margin:auto;
-	height:100vh;
+        overflow: hidden;
 	width:1000px;
+        padding-bottom: 20px;
+        border-bottom:2px solid #405C1A;
 	border-left:2px solid #405C1A;
 	border-right:2px solid #405C1A;
 	box-shadow: 0px 0px 50px #8ED159;

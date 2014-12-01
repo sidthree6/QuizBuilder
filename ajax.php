@@ -27,8 +27,24 @@ if(isset($_SESSION['u_name']))
 		$isAdmin = 1;
 		
 	//User Create New Catagory
-	if(isset($_GET['action']))
+	if(isset($_GET['action']) && isset($_GET['id']))
 	{
+            $action = $_GET['action'];
+            $id     = $_GET['id'];
+            
+            $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$id);
+            $check->execute();
+            $check->setFetchMode(PDO::FETCH_ASSOC);
+            $checkResult = $check->fetch();
+            
+            if($checkResult['mid'] == $mid)
+            {
+                $del = $db->prepare("DELETE FROM quiz_catagory WHERE cid=".$id);
+                $del->execute();
+                
+                echo "1";
+            }       
+            
 		/*$c_name = mysql_real_escape_string(stripslashes($_POST['c_name']));
 		$catagory = $db->prepare("SELECT title FROM quiz_catagory WHERE title=:title");
 		$catagory->bindParam(":title",$c_name);
@@ -51,7 +67,6 @@ if(isset($_SESSION['u_name']))
 				$output = "<p class=\"error\">A catagory with the name \"$c_name\" already exist. Please choose another name.</p>";
 			}
 		}*/
-		echo "Submited";
 	}
 }
 else

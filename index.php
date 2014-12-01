@@ -10,9 +10,9 @@ if(isset($_SESSION['u_name']))
 	
 	$query->setFetchMode(PDO::FETCH_OBJ);
 	$result = $query->fetch();
-	
+
 	if($result->logged == 1)
-		header("location: member.php");
+            header("location: member.php");
 }
 
 include("class/template.php");
