@@ -39,6 +39,7 @@ class Template
 		$output .= "<html>\n";
 		$output .= "<head>\n";
 		$output .= "<title>".$this->title." ".count($this->script)."</title>\n";
+		$output .= ("<script type=\"text/javascript\" src=\"http://code.jquery.com/jquery-latest.min.js\"></script>\n");
 		for($i = 0;$i<count($this->script);$i++)
 		{
 			 $output .= ("<script type=\"text/javascript\" src=\"scripts/".$this->script[$i]."\"></script>\n");

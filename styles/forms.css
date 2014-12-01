@@ -44,7 +44,13 @@
 	background-repeat:repeat-x;
 }
 
-#content .error
+#createCatagory 
+{
+	padding-bottom:20px;
+	border-bottom:1px solid #007B06;
+}
+
+#createCatagory .error
 {
 	padding:10px;
 	background-color:#FFB7B8;
@@ -55,7 +61,7 @@
 	border:2px solid #B40003;
 }
 
-#content .success
+#createCatagory .success
 {
 	padding:10px;
 	background-color:#B5FFBD;
@@ -64,4 +70,29 @@
 	color:#058700;
 	font-weight:bold;
 	border:2px solid #058700;
+}
+
+#listCatagory table
+{
+	width:690px;
+	font-size:12px;
+	border:1px solid #8ae45c;
+}
+
+#listCatagory td, #listCatagory th
+{
+	padding:10px;
+	text-align:center;
+	border:1px solid #8ae45c;
+}
+
+#listCatagory th
+{
+	background-color:#8ae45c;
+}
+
+#listCatagory td > div
+{
+	max-width:400px;
+	overflow:hidden;
 }
