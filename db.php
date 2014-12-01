@@ -1,7 +1,11 @@
 <?php
-include("class/Database.php");
 
-$database = new Database("localhost","quizbuilder","root","sfexHbMJ7RjqPyDm");
+define("server","localhost");
+define("dbname","quizbuilder");
+define("dbuser","root");
+define("dbpass","dbpass");
 
-$database->connect("debug");
+$db = new PDO("mysql:host=".server.";dbname=".dbname,dbuser, dbpass);
+
+
 ?>

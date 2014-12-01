@@ -1,0 +1,67 @@
+/* CSS Document */
+
+#login
+{
+	width: 50%;
+    margin: 0 auto;
+}
+
+#catagory_create
+{
+	display:table;              
+}
+
+#catagory_create .tr
+{
+	display:table-row;
+}
+
+#catagory_create label, #catagory_create input
+{
+    display:table-cell;
+	padding:15px;       
+}
+
+#catagory_create input[type="text"]
+{
+	padding:5px;
+	width:300px;
+	border:1px solid #148e2b;
+}
+
+#catagory_create input[type="submit"]
+{
+	padding:5px;
+	background-image:url("../images/button_bg.png");
+	background-repeat:repeat-x;
+	border:1px solid #287611;
+	border-radius:5px;
+}
+
+#catagory_create input[type="submit"]:active
+{
+	background-image:url("../images/button_bg_pressed.png");
+	background-repeat:repeat-x;
+}
+
+#content .error
+{
+	padding:10px;
+	background-color:#FFB7B8;
+	width:690px;
+	font-size:12px;
+	color:#B40003;
+	font-weight:bold;
+	border:2px solid #B40003;
+}
+
+#content .success
+{
+	padding:10px;
+	background-color:#B5FFBD;
+	width:690px;
+	font-size:12px;
+	color:#058700;
+	font-weight:bold;
+	border:2px solid #058700;
+}

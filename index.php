@@ -1,5 +1,20 @@
 <?php
+session_start();
 include("db.php");
+
+if(isset($_SESSION['u_name']))
+{
+	$query = $db->prepare("SELECT * FROM quiz_member WHERE username = :username");
+	$query->bindParam(":username",$_SESSION['u_name']);
+	$query->execute();
+	
+	$query->setFetchMode(PDO::FETCH_OBJ);
+	$result = $query->fetch();
+	
+	if($result->logged == 1)
+		header("location: member.php");
+}
+
 include("class/template.php");
 
 $scripts = array("main.js","http://code.jquery.com/jquery-latest.min.js");
@@ -8,9 +23,13 @@ $styles = array("main.css");
 $template = new Template("QuizBuilder - Easier to Build Quiz", $scripts, $styles);
 
 $template->outPutHeader();
+
+$template->headerBlock();
+
+$template->navigationBlock();
 ?>
 
-<p>Registration Form: </p>
+<div style="padding:20px;"><p>Registration Form: </p>
 <form action="register.php" method="post" id="registration">
 	<label for="r_fname">First Name: </label><input name="r_fname" type="text" id="r_fname"><br>
     <label for="r_lname">Last Name: </label><input name="r_lname" type="text" id="r_lname"><br>
@@ -21,11 +40,6 @@ $template->outPutHeader();
  	<input type="submit" name="register" id="register" value="Register">
 </form>
 
-<p>Login Form: </p>
-<form action="login.php" method="post" id="login">
-	<label for="l_username">Username: </label><input name="l_username" type="text" id="l_username"><br>
-    <label for="l_password">Password: </label><input name="l_password" type="password" id="l_password"><br>  	
- 	<input type="submit" name="login" id="login" value="Login">
-</form>
+</div>
 
 <?php $template->outputFooter(); ?>

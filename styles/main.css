@@ -1,3 +1,159 @@
 @charset "utf-8";
 /* CSS Document */
+body
+{	
+	margin:auto;	
+	font-family:Verdana;
+	background-image:url("../images/background.png");
+	background-repeat:repeat;
+}
 
+.main
+{	
+	margin:auto;
+	height:100vh;
+	width:1000px;
+	border-left:2px solid #405C1A;
+	border-right:2px solid #405C1A;
+	box-shadow: 0px 0px 50px #8ED159;
+	background-color:#FFFFFF;
+}
+
+#header
+{
+	background-image:url("../images/header_bg.png");
+	background-repeat:repeat-x;
+	height:96px;
+}
+
+#header .titleimg
+{
+	width:300px;
+	height:59px;
+	padding-left:50px;
+	vertical-align:middle;
+	padding-top:5px;
+	float:left;
+}
+
+#header ul
+{
+	float:right;
+	padding-right:60px;
+	padding-top:5px;
+}
+
+#header li
+{
+	display:inline;	
+}
+
+#header ul li a
+{
+	background-image:url("../images/menu_bg.png");
+	background-repeat:repeat-x;
+	padding:10px 25px 10px 25px;
+	margin-left:10px;
+	font-size:14px;
+	border-radius:15px;
+	text-decoration:none;
+	color:#EDFFEE;
+}
+
+#navigation
+{	
+	margin:0px;
+	clear:both;
+	background:#8857bc;
+	width: 100%; 
+	padding: .3em 0 .3em 0;
+}
+
+#navigation ul
+{
+	list-style: none; 
+    margin: 0; 
+    padding: 0; 
+}
+
+#navigation ul li
+{
+	margin: 0; 
+    padding: 0; 
+    display: inline;
+}
+
+#navigation ul li a
+{
+	margin: 0; 
+    padding: .3em 2em .3em 2em; 
+    text-decoration: none; 
+    color: #FFFFFF;
+}
+
+#navigation ul li a:hover
+{
+	background-image:url("../images/menu_bg.png");
+	background-repeat:repeat-x;
+	color:#8ae45c;
+}
+
+#navigation ul li input
+{
+	margin-left:110px;
+	padding:0px;
+	color:#868686;
+}
+
+#sidebar
+{
+	float: left;
+	width: 250px;
+	padding-bottom: 10px;
+	color:#4e227c;
+	margin:0px;
+}
+
+#sidebar ul
+{
+	margin-bottom: 15px;
+	padding:0;
+	list-style:none;
+}
+
+#sidebar ul a.header
+{
+	padding: 15px 5px 15px 15px;
+	display: block;
+	width: 230px;
+	text-decoration: none;
+	background:#8ae45c;
+	color:##4e227c;
+	border-bottom:1px solid #FFFFFF;
+	
+}
+
+#sidebar ul a.items
+{
+	padding: 15px 5px 15px 15px;
+	display: block;
+	width: 230px;
+	text-decoration: none;
+	background:#8857bc;
+	color:#FFFFFF;
+	border-bottom:1px solid #FFFFFF;
+}
+
+#sidebar ul a.items:hover
+{
+	background-image:url("../images/menu_bg.png");
+	background-repeat:repeat-x;
+	color:#8ae45c;
+}
+
+#content
+{
+	padding: 10px 0;
+	width: 730px;
+	float: right;
+}
