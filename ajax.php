@@ -29,44 +29,62 @@ if(isset($_SESSION['u_name']))
 	//User Create New Catagory
 	if(isset($_GET['action']) && isset($_GET['id']))
 	{
-            $action = $_GET['action'];
-            $id     = $_GET['id'];
+            $action = mysql_real_escape_string(stripslashes($_GET['action']));
+            $id     = mysql_real_escape_string(stripslashes($_GET['id']));
+			$value  = "";
+			
+			if(isset($_GET['value']))
+				$value = $_GET['value'];			
             
             $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$id);
             $check->execute();
             $check->setFetchMode(PDO::FETCH_ASSOC);
             $checkResult = $check->fetch();
             
-            if($checkResult['mid'] == $mid)
+			// Only perform action if right user is performing action or user is an admin
+            if($checkResult['mid'] == $mid || $isAdmin == 1)
             {
-                $del = $db->prepare("DELETE FROM quiz_catagory WHERE cid=".$id);
-                $del->execute();
-                
-                echo "1";
-            }       
-            
-		/*$c_name = mysql_real_escape_string(stripslashes($_POST['c_name']));
-		$catagory = $db->prepare("SELECT title FROM quiz_catagory WHERE title=:title");
-		$catagory->bindParam(":title",$c_name);
-		$catagory->execute();
-		
-		$affectedRow = $catagory->rowCount();
-		if(empty($c_name))
-		{
-			$output = "<p class=\"error\">A catagory must have a name.</p>";
-		}
-		else
-		{
-			if($affectedRow == 0)
-			{			
-				$db->query("INSERT INTO quiz_catagory (mid,title,datecreated) VALUES ($mid,'$c_name','$now')");
-				$output = "<p class=\"success\">A catagory with the name \"$c_name\" has been created.</p>";
-			}
-			else
-			{
-				$output = "<p class=\"error\">A catagory with the name \"$c_name\" already exist. Please choose another name.</p>";
-			}
-		}*/
+				// Delete
+				if($action == "delete")
+				{
+					$del = $db->prepare("DELETE FROM quiz_catagory WHERE cid=".$id);
+					$del->execute();
+					
+					echo "deleted";
+				}
+				// Edit
+				if($action == "edit" && !empty($value))
+				{
+					$value = mysql_real_escape_string(stripslashes(trim($value)));
+					if(strlen($value) < 0 || strlen($value) > 100)
+					{
+						echo "wrongsize";
+					}
+					else
+					{
+						$edit = $db->query("UPDATE quiz_catagory SET title='".$value."' WHERE cid=".$id);
+						echo "edited";
+					}
+				}
+				
+				if($action == "addquiz" && !empty($value))
+				{
+					if($value == "mc")
+					{
+						$question     = "Sample Question";
+						$answerOne    = "Option One";
+						$answerTwo    = "Option Two";
+						$answerThree  = "Option Three";
+						$answerFour   = "Option Four";
+						$correctanswer= 1;
+						$mcortf		  = 1;
+						
+						$db->query("INSERT INTO quiz_quizes (mid,cid,question,answerOne,answerTwo,answerThree,answerFour,correctanswer,mcortf,datecreated) VALUES ($mid,$id,'$question','$answerOne','$answerTwo','$answerThree','$answerFour',$correctanswer,$mcortf,'$now')");
+						
+						echo "1";
+					}
+				}
+            }
 	}
 }
 else

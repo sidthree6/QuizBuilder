@@ -29,7 +29,7 @@ if(isset($_SESSION['u_name']))
 	//User Create New Catagory
 	if(isset($_GET['create_cat']))
 	{
-		$c_name = mysql_real_escape_string(stripslashes($_GET['c_name']));
+		$c_name = mysql_real_escape_string(stripslashes(trim($_GET['c_name'])));
 		$catagory = $db->prepare("SELECT title FROM quiz_catagory WHERE title=:title");
 		$catagory->bindParam(":title",$c_name);
 		$catagory->execute();
@@ -41,16 +41,8 @@ if(isset($_SESSION['u_name']))
 		}
 		else
 		{
-                    $db->query("INSERT INTO quiz_catagory (mid,title,datecreated) VALUES ($mid,'$c_name','$now')");
-                    $output = "<p class=\"success\">A catagory with the name \"$c_name\" has been created.</p>";
-			/*if($affectedRow == 0)
-			{			
-				
-			}
-			else
-			{
-				$output = "<p class=\"error\">A catagory with the name \"$c_name\" already exist. Please choose another name.</p>";
-			}*/
+        	$db->query("INSERT INTO quiz_catagory (mid,title,datecreated) VALUES ($mid,'$c_name','$now')");
+            $output = "<p class=\"success\">A catagory with the name \"$c_name\" has been created.</p>";
 		}
 	}
 }
@@ -78,7 +70,7 @@ $template->sidebarBlock($isAdmin);
 <article id="content">
 
 <div id="createCatagory">
-    <h2>Create A New Catagory</h2>
+    <h2>Create New Quiz</h2>
     <?php
     if($output != "")
     {
@@ -86,13 +78,13 @@ $template->sidebarBlock($isAdmin);
     }
     ?>
     <form action="c_catagory.php" method="get" id="catagory_create">
-        <div class="tr"><label>Catagory Name: </label><input type="text" name="c_name" id="c_name"></div>
-        <div class="tr"><label></label><input type="submit" name="create_cat" id="create_cat" value="Create Catagory"></div>
+        <div class="tr"><label>Quiz Title: </label><input type="text" name="c_name" id="c_name"></div>
+        <div class="tr"><label></label><input type="submit" name="create_cat" id="create_cat" value="Create Quiz"></div>
     </form>
 </div>
 
 <div id="listCatagory">
-	<h2>List of Catagories</h2>
+	<h2>List of Quizes</h2>
     <?php
 	
 	$catagory = $db->prepare("SELECT * FROM quiz_catagory WHERE mid=$mid");
@@ -102,9 +94,9 @@ $template->sidebarBlock($isAdmin);
 	
         $numCatagory = $catagory->rowCount();
         
-        if($numCatagory == 0)
+        if($numCatagory < 1)
         {
-            echo "<p>You do not have any Catagory.</p>";
+            echo "<p>You do not have any Quiz.</p>";
         }
         else
         {

@@ -5,28 +5,32 @@ $(document).ready(function() {
                                 
 		$("#buttons_"+editID).html("<img src=\"images/save.png\" class=\"saveEdit\" id=\""+editID+"\"> <img src=\"images/close.png\" class=\"closeEdit\" id=\""+editID+"\">");
 		
-		$("#"+editID).html("<label>Catagory Name: </label><input type=\"text\" name=\"c_name\" id=\"c_name\">");
+		$("#"+editID).html("<label>Catagory Title: </label><input type=\"text\" name=\"c_name\" value=\""+value+"\" id=\"c_edit_name\">");
 		
                 $(".saveEdit").click(function(){
-                    //var value = $("#c_name").val();
-                    alert($("#c_name").val());
-                    /*$.ajax({
+                    var editVal = $("#c_edit_name").val();                   
+                    var id = $(this).attr("id");
+					
+					$.ajax({
                         type:"GET",
-                        url:"ajax.php?action=edit&id="+id,
+                        url:"ajax.php?action=edit&id="+id+"&value="+editVal,
                         dataType:"html",
                         success: function(data){
-                          if(data == "1")
-                          {
-                              $("."+id).hide("slow",function(){
-                                window.location.href = "c_catagory.php";
-                              });
+                          if(data == "edited")
+                          {							  	
+                                window.location.href = "c_catagory.php";                              
                           }
+						  else if(data == "wrongsize")				
+						  {
+							  alert("Title must not be more than 100 characters long.");
+						  }
                           else
                           {
                               alert("Error Occured!");
                           }
                         },
-                    });*/
+                    });
+					
                 });
                 
 		$(".closeEdit").click(function(){
@@ -35,7 +39,7 @@ $(document).ready(function() {
 			
 			var editID_C = $(this).attr("id");
 			$("td#"+editID).html(value);
-                        window.location.href = "c_catagory.php";
+            window.location.href = "c_catagory.php";
 		});		
 	});	
         
@@ -46,7 +50,7 @@ $(document).ready(function() {
                 url:"ajax.php?action=delete&id="+id,
                 dataType:"html",
                 success: function(data){
-                  if(data == "1")
+                  if(data == "deleted")
                   {
                       $("."+id).hide("slow",function(){
                         window.location.href = "c_catagory.php";
@@ -59,4 +63,30 @@ $(document).ready(function() {
                 },
             });
         });
+		
+	$(".add_quiz_mc, .add_quiz_tf").click(function(){
+		var id = $(this).attr("id");
+		var tclass = $(this).attr("class");
+		
+		var sendurl="";
+		
+		if(tclass == "add_quiz_mc")
+			sendurl = "ajax.php?action=addquiz&value=mc&id="+id;
+		else
+			sendurl = "ajax.php?action=addquiz&value=tf&id="+id;
+			
+		$.ajax({
+			type:"GET",
+			url:sendurl,
+			dataType:"html",
+			success: function(data){
+			  if(data == "1")
+			  {
+				  alert("Multiple Choice Added!");
+			  }
+			},
+		});
+		
+	});	
+	
 });

@@ -104,10 +104,8 @@ class Template
 		$output .= "\t<nav>\n";
 		$output .= "\t\t<ul>\n";
 		$output .= "\t\t\t<li><a class=\"header\">Quiz Management</a></li>\n";
-		$output .= "\t\t\t<li><a href=\"c_catagory.php\" class=\"items\">Create / Edit Catagory</a></li>\n";
-		$output .= "\t\t\t<li><a href=\"c_quizorflash.php\" class=\"items\">Create Quiz</a></li>\n";
-		$output .= "\t\t\t<li><li><a href=\"e_quizorflash.php\" class=\"items\">Edit Quiz</a></li>\n";
-		$output .= "\t\t\t<li><a href=\"d_quizorflash.php\" class=\"items\">Delete Quiz</a></li>\n";
+		$output .= "\t\t\t<li><a href=\"c_catagory.php\" class=\"items\">Create / Edit Quiz Title</a></li>\n";
+		$output .= "\t\t\t<li><a href=\"c_quiz.php\" class=\"items\">Create / Edit Quiz Contents</a></li>\n";
 		$output .= "\t\t\t<li><a class=\"header\">User Management</a></li>\n";
 		$output .= "\t\t\t<li><a href=\"e_uinfo.php\" class=\"items\">Edit User Info</a></li>\n";
 		$output .= "\t\t\t<li><a href=\"c_pass.php\" class=\"items\">Change Password</a></li>\n";
