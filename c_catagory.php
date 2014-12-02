@@ -62,9 +62,7 @@ $template->outPutHeader();
 
 $template->headerBlock(1);
 
-$template->navigationBlock();
-
-$template->sidebarBlock($isAdmin);
+$template->navigationBlockLogged($isAdmin);
 ?>
 
 <article id="content">
@@ -107,7 +105,7 @@ $template->sidebarBlock($isAdmin);
             <?php
                 foreach($catagory as $result)
                 {		
-                        echo "\t<tr class=\"".$result['cid']."\"><td>$count</td><td id=\"".$result['cid']."\">".$result["title"]."</td><td>".$result["datecreated"]."</td><td id=\"buttons_".$result['cid']."\"><img src=\"images/edit.png\" class=\"edit\" id=\"".$result['cid']."\" /> <img src=\"images/delete.png\" class=\"delete\" id=\"".$result['cid']."\" /></td></tr>\n";
+                        echo "\t<tr class=\"".$result['cid']."\"><td>$count</td><td class=\"content_".$result['cid']."\" id=\"".$result['cid']."\">".$result["title"]."</td><td>".$result["datecreated"]."</td><td id=\"buttons_".$result['cid']."\"><img src=\"images/edit.png\" class=\"edit\" id=\"".$result['cid']."\" /> <img src=\"images/delete.png\" class=\"delete\" id=\"".$result['cid']."\" /></td></tr>\n";
                         $count++;
                 }
                 ?>

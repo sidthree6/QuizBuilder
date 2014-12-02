@@ -45,9 +45,9 @@ $template->outPutHeader();
 
 $template->headerBlock(1);
 
-$template->navigationBlock();
+$template->navigationBlockLogged($isAdmin);
 
-$template->sidebarBlock($isAdmin);
+//$template->sidebarBlock($isAdmin);
 ?>
 
 <article id="content">
@@ -58,19 +58,30 @@ $getcatagory->execute();
 
 $numCatagory = $getcatagory->rowCount();
 ?>
-<div id="quizBlock">
 
 <?php
 if(isset($_GET['quiz_title_chosen']) && isset($_GET['create_quiz']))
 {
 	$cid = mysql_real_escape_string(stripslashes(trim($_GET['quiz_title_chosen'])));
 	
-	$getquiz = $db->prepare("SELECT * FROM quiz_quiz WHERE cid=".$cid." AND mid=".$mid);
+	$getquiz = $db->prepare("SELECT * FROM quiz_quizes WHERE cid=".$cid." AND mid=".$mid);
 	$getquiz->execute();
 	
 	?>
+    <div id="questionBlock">
+    <p id="questionP">Questions</p>
     <input type="button" class="add_quiz_mc" id="<?php echo $cid; ?>" value="Add Multiple Choice"> <input type="button" class="add_quiz_tf" id="<?php echo $cid; ?>" value="Add True / False">
     <?php
+	if($getquiz->rowCount() <1)
+	{
+		echo "<p>There are no question created for this quiz.</p>";
+	}
+	?>
+    </div>
+    
+    <div id="quizBlock">
+    
+    <?php	
 }
 else
 {
@@ -94,7 +105,7 @@ else
 			}
 			?>
             </select></div>
-			<div class="tr"><label></label><input type="submit" name="create_quiz" id="create_quiz" value="Create Quiz"></div>
+			<div class="tr"><label></label><input type="submit" name="create_quiz" id="create_quiz" value="Choose Quiz Title"></div>
 		</form>
     <?php
 	}

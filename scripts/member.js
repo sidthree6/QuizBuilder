@@ -45,23 +45,28 @@ $(document).ready(function() {
         
         $(".delete").click(function(){
             var id = $(this).attr("id");
-            $.ajax({
-                type:"GET",
-                url:"ajax.php?action=delete&id="+id,
-                dataType:"html",
-                success: function(data){
-                  if(data == "deleted")
-                  {
-                      $("."+id).hide("slow",function(){
-                        window.location.href = "c_catagory.php";
-                      });
-                  }
-                  else
-                  {
-                      alert("Error Occured!");
-                  }
-                },
-            });
+			var nameQuiz = $(".content_"+id).html();
+			
+			if(confirm("Are you sure you want to delete \""+nameQuiz+"\"?"))
+			{			
+				$.ajax({
+					type:"GET",
+					url:"ajax.php?action=delete&id="+id,
+					dataType:"html",
+					success: function(data){
+					  if(data == "deleted")
+					  {
+						  $("."+id).hide("slow",function(){
+							window.location.href = "c_catagory.php";
+						  });
+					  }
+					  else
+					  {
+						  alert("Error Occured!");
+					  }
+					},
+				});
+			}
         });
 		
 	$(".add_quiz_mc, .add_quiz_tf").click(function(){
@@ -82,7 +87,7 @@ $(document).ready(function() {
 			success: function(data){
 			  if(data == "1")
 			  {
-				  alert("Multiple Choice Added!");
+				  window.location.reload();
 			  }
 			},
 		});

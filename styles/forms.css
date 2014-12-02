@@ -74,7 +74,8 @@
 
 #listCatagory table
 {
-	width:690px;
+	width:900px;
+	max-width:900px;
 	font-size:12px;
 	border:1px solid #8ae45c;
 }
