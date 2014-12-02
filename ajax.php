@@ -29,8 +29,8 @@ if(isset($_SESSION['u_name']))
 	//User Create New Catagory
 	if(isset($_GET['action']) && isset($_GET['id']))
 	{
-            $action = mysql_real_escape_string(stripslashes($_GET['action']));
-            $id     = mysql_real_escape_string(stripslashes($_GET['id']));
+            $action = mysql_real_escape_string(stripslashes(trim($_GET['action'])));
+            $id     = mysql_real_escape_string(stripslashes(trim($_GET['id'])));
 			$value  = "";
 			
 			if(isset($_GET['value']))
@@ -85,7 +85,99 @@ if(isset($_SESSION['u_name']))
 						
 						echo "1";
 					}
+                                        if($value == "tf")
+					{
+						$question     = "Sample True/False Question";
+						$answerOne    = "True";
+						$answerTwo    = "False";
+						$correctanswer= 1;
+						$mcortf	      = 2;
+						
+						$db->query("INSERT INTO quiz_quizes (mid,cid,question,answerOne,answerTwo,correctanswer,mcortf,datecreated) VALUES ($mid,$id,'$question','$answerOne','$answerTwo',$correctanswer,$mcortf,'$now')");
+						
+						/*$db->query("INSERT INTO quiz_quizes (mid,cid,question) VALUES ($mid,$id,'Sample Question')");*/
+						
+						echo "2";
+					}
 				}
+                                if($action == "getquiz")
+                                {
+                                    $getQuestion = $db->prepare("SELECT * FROM quiz_quizes WHERE qid=$id");
+                                    $getQuestion->execute();
+                                    
+                                    $getQuestion->setFetchMode(PDO::FETCH_OBJ);
+                                    $quizQ = $getQuestion->fetch();
+                                    
+                                    $output = "<h3>Editing Question:</h3>\n<textarea id=\"questionText\">".$quizQ->question."</textarea>\n<br/>";
+                                    
+                                    $countquestion = 0;
+                                    $checked = "";
+                                    
+                                    if($quizQ->mcortf == 1)
+                                    {
+                                        if(!empty($quizQ->answerOne))
+                                        {
+                                            if($quizQ->correctanswer == 1)
+                                                $checked = "checked=checked";                                       
+                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"one\" $checked> <textarea>".$quizQ->answerOne."</textarea>\n<br/>";
+
+                                            $checked = "";
+                                        }
+                                        if(!empty($quizQ->answerTwo))
+                                        {
+                                            if($quizQ->correctanswer == 2)
+                                                $checked = "checked=checked";
+                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"two\" $checked> <textarea>".$quizQ->answerTwo."</textarea>\n<br/>";
+
+                                            $checked = "";
+                                        }                                    
+                                        if(!empty($quizQ->answerThree))
+                                        {
+                                            if($quizQ->correctanswer == 3)
+                                                $checked = "checked=checked";
+                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"three\" $checked> <textarea>".$quizQ->answerThree."</textarea>\n<br/>";
+
+                                            $checked = "";
+                                        }                                    
+                                        if(!empty($quizQ->answerFour))
+                                        {
+                                            if($quizQ->correctanswer == 4)
+                                                $checked = "checked=checked";
+                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"four\" $checked> <textarea>".$quizQ->answerFour."</textarea>\n<br/>";
+
+                                            $checked = "";
+                                        }                                    
+                                        if(!empty($quizQ->answerFive))
+                                        {
+                                            if($quizQ->correctanswer == 5)
+                                                $checked = "checked=checked";
+                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"five\" $checked> <textarea>".$quizQ->answerFive."</textarea>\n<br/>";
+
+                                            $checked = "";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if(!empty($quizQ->answerOne))
+                                        {
+                                            if($quizQ->correctanswer == 1)
+                                                $checked = "checked=checked";                                       
+                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"true\" $checked> True\n<br/>";
+
+                                            $checked = "";
+                                        }
+                                        if(!empty($quizQ->answerTwo))
+                                        {
+                                            if($quizQ->correctanswer == 2)
+                                                $checked = "checked=checked";
+                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"false\" $checked> Flase\n<br/>";
+
+                                            $checked = "";
+                                        }
+                                    }
+                                    
+                                    echo $output;
+                                }
             }
 	}
 }

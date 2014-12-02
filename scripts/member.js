@@ -39,7 +39,7 @@ $(document).ready(function() {
 			
 			var editID_C = $(this).attr("id");
 			$("td#"+editID).html(value);
-            window.location.href = "c_catagory.php";
+                        window.location.href = "c_catagory.php";
 		});		
 	});	
         
@@ -85,13 +85,27 @@ $(document).ready(function() {
 			url:sendurl,
 			dataType:"html",
 			success: function(data){
-			  if(data == "1")
+			  if(data == "1" || data == "2")
 			  {
-				  window.location.reload();
-			  }
+				  location.reload();
+			  }                          
 			},
 		});
 		
-	});	
+	});
+        
+        $(".editQuiz").click(function(){
+           var id = $(this).attr("id");
+           
+           $.ajax({
+                type:"GET",
+                url:"ajax.php?action=getquiz&id="+id,
+                dataType:"html",
+                success: function(data){
+                  $("#quizBlock").html(data);
+                },
+            });
+            
+        });
 	
 });

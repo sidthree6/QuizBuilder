@@ -37,9 +37,8 @@ $template->outPutHeader();
 
 $template->headerBlock(1);
 
-$template->navigationBlock();
+$template->navigationBlockLogged($isAdmin);
 
-$template->sidebarBlock($isAdmin);
 ?>
 
 

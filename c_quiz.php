@@ -66,26 +66,63 @@ if(isset($_GET['quiz_title_chosen']) && isset($_GET['create_quiz']))
 	
 	$getquiz = $db->prepare("SELECT * FROM quiz_quizes WHERE cid=".$cid." AND mid=".$mid);
 	$getquiz->execute();
-	
+        $getquiz->setFetchMode(PDO::FETCH_ASSOC);
+
+        $getquizname = $db->prepare("SELECT * FROM quiz_catagory WHERE cid=".$cid." AND mid=".$mid);
+        $getquizname->execute();
+        $getquizname->setFetchMode(PDO::FETCH_ASSOC);
+        
+        $title_Cat="";
+        
+        if($getquizname->rowCount() == 1)
+        {
+            foreach($getquizname as $r)
+            {
+                $title_Cat = $r['title'];
+            }
+        }
+        else
+        {
+            header("location: c_quiz.php");
+        }
+        
 	?>
+    <a href="c_quiz.php" id="goBackQuiz"><< Go Back</a>
     <div id="questionBlock">
+        <p>Catagory: <?php echo $title_Cat; ?></p>
     <p id="questionP">Questions</p>
     <input type="button" class="add_quiz_mc" id="<?php echo $cid; ?>" value="Add Multiple Choice"> <input type="button" class="add_quiz_tf" id="<?php echo $cid; ?>" value="Add True / False">
     <?php
 	if($getquiz->rowCount() <1)
 	{
-		echo "<p>There are no question created for this quiz.</p>";
+            echo "<p>There are no question created for this quiz.</p>";
 	}
+        else
+        {
+            $count=1;
+            echo "<table style=\"border:0px;width:300px\">";
+            foreach($getquiz as $r)
+            {
+                echo "\n<tr id=\"questionOut\"><td>".$count.")</td><td style=\"width:220px;overflow:hidden\">".$r['question']."</td><td><img src=\"images/edit.png\" class=\"editQuiz\" id=\"".$r['qid']."\" /> <img src=\"images/delete.png\" class=\"deleteQuiz\" id=\"".$r['qid']."\" /></td></tr>\n";
+                $count++;
+            }
+            echo "</table>";
+        }
 	?>
     </div>
     
     <div id="quizBlock">
+        
+        
+        
+    </div>
     
     <?php	
 }
 else
 {
 ?>
+    <div id="quizBlock">
 	<h2>Choose Quiz Title</h2>
     
     <?php
