@@ -81,6 +81,8 @@ if(isset($_SESSION['u_name']))
 						
 						$db->query("INSERT INTO quiz_quizes (mid,cid,question,answerOne,answerTwo,answerThree,answerFour,correctanswer,mcortf,datecreated) VALUES ($mid,$id,'$question','$answerOne','$answerTwo','$answerThree','$answerFour',$correctanswer,$mcortf,'$now')");
 						
+						/*$db->query("INSERT INTO quiz_quizes (mid,cid,question) VALUES ($mid,$id,'Sample Question')");*/
+						
 						echo "1";
 					}
 				}
