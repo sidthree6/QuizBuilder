@@ -53,7 +53,7 @@ else
 
 include("class/template.php");
 
-$scripts = array("main.js","member.js");
+$scripts = array("main.js");
 $styles = array("main.css","forms.css");
 
 $template = new Template("QuizBuilder - Easier to Build Quiz", $scripts, $styles);

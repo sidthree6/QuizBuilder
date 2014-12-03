@@ -96,7 +96,7 @@ class Template
 		$output .= "\t\t<li><a href=\"#\">User Management</a>\n";
 		$output .= "\t\t\t<ul>\n";
 		$output .= "\t\t\t\t<li><a href=\"c_uinfo.php\">Edit User Info</a></li>\n";
-		$output .= "\t\t\t\t<li><a href=\"c_pass.php\">Change Password</a></li>\n";
+		$output .= "\t\t\t\t<li><a href=\"c_pass.php\">Profile Overview</a></li>\n";
 		$output .= "\t\t\t</ul>\n";
 		$output .= "\t\t</li>\n";
 		if($isadmin == 1)
@@ -104,7 +104,7 @@ class Template
 			$output .= "\t\t<li><a href=\"#\">Admin Panel</a>\n";
 			$output .= "\t\t\t<ul>\n";
 			$output .= "\t\t\t\t<li><a href=\"admin_log.php\">Latest User Log</a></li>\n";
-			$output .= "\t\t\t\t<li><a href=\"admin_e_user.php\">Edit / View / Delete User</a></li>\n";
+			$output .= "\t\t\t\t<li><a href=\"admin_e_user.php\">View / Delete User</a></li>\n";
 			$output .= "\t\t\t</ul>\n";
 			$output .= "\t\t</li>\n";
 		}
@@ -130,7 +130,7 @@ class Template
 		{
 			$output .= "\t\t\t<li><a class=\"header\">Admin Panel</a></li>\n";
 			$output .= "\t\t\t<li><a href=\"admin_log.php\" class=\"items\">Latest User Log</a></li>\n";
-			$output .= "\t\t\t<li><a href=\"admin_e_user.php\" class=\"items\">Edit / View / Delete User</a></li>\n";
+			$output .= "\t\t\t<li><a href=\"admin_e_user.php\" class=\"items\">View / Delete User</a></li>\n";
 		}
 		$output .= "\t\t</ul>\n";
 		$output .= "\t</nav>\n";

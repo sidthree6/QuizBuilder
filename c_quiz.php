@@ -36,7 +36,7 @@ else
 
 include("class/template.php");
 
-$scripts = array("main.js","member.js");
+$scripts = array("main.js");
 $styles = array("main.css","forms.css");
 
 $template = new Template("QuizBuilder - Easier to Build Quiz", $scripts, $styles);
@@ -90,7 +90,8 @@ if(isset($_GET['quiz_title_chosen']) && isset($_GET['create_quiz']))
     <a href="c_quiz.php" id="goBackQuiz"><< Go Back</a>
     <div id="questionBlock">
         <p>Catagory: <?php echo $title_Cat; ?></p>
-    <p id="questionP">Questions</p>
+        <p id="shareLink">Quiz Link (Share with others): <a href="quiz.php?id=<?php echo $cid; ?>">Link</a></p>
+    <p id="questionP">Questions</p>    
     <input type="button" class="add_quiz_mc" id="<?php echo $cid; ?>" value="Add Multiple Choice"> <input type="button" class="add_quiz_tf" id="<?php echo $cid; ?>" value="Add True / False">
     <?php
 	if($getquiz->rowCount() <1)
@@ -103,7 +104,7 @@ if(isset($_GET['quiz_title_chosen']) && isset($_GET['create_quiz']))
             echo "<table style=\"border:0px;width:300px\">";
             foreach($getquiz as $r)
             {
-                echo "\n<tr id=\"questionOut\"><td>".$count.")</td><td style=\"width:220px;overflow:hidden\">".$r['question']."</td><td><img src=\"images/edit.png\" class=\"editQuiz\" id=\"".$r['qid']."\" /> <img src=\"images/delete.png\" class=\"deleteQuiz\" id=\"".$r['qid']."\" /></td></tr>\n";
+                echo "\n<tr class=\"".$r['qid']."\" id=\"questionOut\"><td>".$count.")</td><td style=\"width:220px;overflow:hidden\">".$r['question']."</td><td><a href=\"getQuiz.php?id=".$r['qid']."&cid=".$r['cid']."\"><img src=\"images/edit.png\" class=\"editQuiz\" id=\"".$r['qid']."\" /></a> <img src=\"images/delete.png\" class=\"deleteQuiz\" id=\"".$r['qid']."\" /></td></tr>\n";
                 $count++;
             }
             echo "</table>";

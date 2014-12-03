@@ -44,15 +44,26 @@ if(isset($_SESSION['u_name']))
 			// Only perform action if right user is performing action or user is an admin
             if($checkResult['mid'] == $mid || $isAdmin == 1)
             {
-				// Delete
+				// Delete Title
 				if($action == "delete")
 				{
 					$del = $db->prepare("DELETE FROM quiz_catagory WHERE cid=".$id);
 					$del->execute();
 					
+					$del = $db->prepare("DELETE FROM quiz_quizes WHERE cid=".$id);
+					$del->execute();
+					
 					echo "deleted";
 				}
-				// Edit
+				//Delete Quiz
+				if($action == "deletequiz")
+				{
+					$del = $db->prepare("DELETE FROM quiz_quizes WHERE qid=".$id);
+					$del->execute();						
+					
+					echo "deleted";
+				}
+				// Edit Title
 				if($action == "edit" && !empty($value))
 				{
 					$value = mysql_real_escape_string(stripslashes(trim($value)));
@@ -99,85 +110,114 @@ if(isset($_SESSION['u_name']))
 						
 						echo "2";
 					}
+				} 
+				
+				if($action == "savetf")
+				{
+					if(!isset($_GET['correct']))
+						header("location: c_quiz.php");
+					if(!isset($_GET['question']))
+						header("location: c_quiz.php");
+					
+					$correct = 	mysql_real_escape_string(stripslashes(trim($_GET['correct'])));
+					$quesion = 	mysql_real_escape_string(stripslashes(trim($_GET['question'])));
+						
+					if($correct == "true")
+						$answer=1;
+					else
+						$answer=2;
+						
+					$insertItem = $db->prepare("UPDATE quiz_quizes SET question=:question,correctanswer=$answer WHERE qid=:qid");
+					$insertItem->bindParam(":question",$quesion);
+					$insertItem->bindParam(":qid",$id);
+					$insertItem->execute();
+					echo "inserted";
+					
 				}
-                                if($action == "getquiz")
-                                {
-                                    $getQuestion = $db->prepare("SELECT * FROM quiz_quizes WHERE qid=$id");
-                                    $getQuestion->execute();
-                                    
-                                    $getQuestion->setFetchMode(PDO::FETCH_OBJ);
-                                    $quizQ = $getQuestion->fetch();
-                                    
-                                    $output = "<h3>Editing Question:</h3>\n<textarea id=\"questionText\">".$quizQ->question."</textarea>\n<br/>";
-                                    
-                                    $countquestion = 0;
-                                    $checked = "";
-                                    
-                                    if($quizQ->mcortf == 1)
-                                    {
-                                        if(!empty($quizQ->answerOne))
-                                        {
-                                            if($quizQ->correctanswer == 1)
-                                                $checked = "checked=checked";                                       
-                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"one\" $checked> <textarea>".$quizQ->answerOne."</textarea>\n<br/>";
-
-                                            $checked = "";
-                                        }
-                                        if(!empty($quizQ->answerTwo))
-                                        {
-                                            if($quizQ->correctanswer == 2)
-                                                $checked = "checked=checked";
-                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"two\" $checked> <textarea>".$quizQ->answerTwo."</textarea>\n<br/>";
-
-                                            $checked = "";
-                                        }                                    
-                                        if(!empty($quizQ->answerThree))
-                                        {
-                                            if($quizQ->correctanswer == 3)
-                                                $checked = "checked=checked";
-                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"three\" $checked> <textarea>".$quizQ->answerThree."</textarea>\n<br/>";
-
-                                            $checked = "";
-                                        }                                    
-                                        if(!empty($quizQ->answerFour))
-                                        {
-                                            if($quizQ->correctanswer == 4)
-                                                $checked = "checked=checked";
-                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"four\" $checked> <textarea>".$quizQ->answerFour."</textarea>\n<br/>";
-
-                                            $checked = "";
-                                        }                                    
-                                        if(!empty($quizQ->answerFive))
-                                        {
-                                            if($quizQ->correctanswer == 5)
-                                                $checked = "checked=checked";
-                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"five\" $checked> <textarea>".$quizQ->answerFive."</textarea>\n<br/>";
-
-                                            $checked = "";
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if(!empty($quizQ->answerOne))
-                                        {
-                                            if($quizQ->correctanswer == 1)
-                                                $checked = "checked=checked";                                       
-                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"true\" $checked> True\n<br/>";
-
-                                            $checked = "";
-                                        }
-                                        if(!empty($quizQ->answerTwo))
-                                        {
-                                            if($quizQ->correctanswer == 2)
-                                                $checked = "checked=checked";
-                                            $output .= "<input type=\"radio\" name=\"answer\" value=\"false\" $checked> Flase\n<br/>";
-
-                                            $checked = "";
-                                        }
-                                    }
-                                    
-                                    echo $output;
-                                }
+				
+				if($action == "savemc")
+				{
+					if(!isset($_GET['correct']))
+						header("location: c_quiz.php");
+					if(!isset($_GET['question']))
+						header("location: c_quiz.php");
+					if(!isset($_GET['one']))
+						header("location: c_quiz.php");
+					if(!isset($_GET['two']))
+						header("location: c_quiz.php");
+					if(!isset($_GET['three']))
+						header("location: c_quiz.php");
+					
+					$correct = 	mysql_real_escape_string(stripslashes(trim($_GET['correct'])));
+					$quesion = 	mysql_real_escape_string(stripslashes(trim($_GET['question'])));
+					$one = mysql_real_escape_string(stripslashes(trim($_GET['one'])));
+					$two = mysql_real_escape_string(stripslashes(trim($_GET['two'])));
+					$three = mysql_real_escape_string(stripslashes(trim($_GET['three'])));
+					
+					$answer = 1;
+					
+					if($correct == "one")
+						$answer=1;
+					if($correct == "two")
+						$answer=2;
+					if($correct == "three")
+						$answer=3;
+					if($correct == "four")
+						$answer=4;
+					if($correct == "five")
+						$answer=5;
+					
+					if(isset($_GET['four']))
+					{
+						$four = mysql_real_escape_string(stripslashes(trim($_GET['four'])));
+					}
+					if(isset($_GET['five']))
+					{
+						$five = mysql_real_escape_string(stripslashes(trim($_GET['five'])));
+					}
+					
+					if(isset($_GET['four']) && isset($_GET['five']))
+					{
+						$insertItem = $db->prepare("UPDATE quiz_quizes SET question=:question,answerOne=:one,answerTwo=:two,answerThree=:three,answerFour=:four,answerFive=:five,correctanswer=$answer WHERE qid=:qid");
+						$insertItem->bindParam(":question",$quesion);
+						$insertItem->bindParam(":one",$one);
+						$insertItem->bindParam(":two",$two);
+						$insertItem->bindParam(":three",$three);
+						$insertItem->bindParam(":four",$four);
+						$insertItem->bindParam(":five",$five);
+						$insertItem->bindParam(":qid",$id);
+						$insertItem->execute();
+					}
+					else
+					{
+						if(isset($_GET['four']))
+						{
+							$insertItem = $db->prepare("UPDATE quiz_quizes SET question=:question,answerOne=:one,answerTwo=:two,answerThree=:three,answerFour=:four,answerFive='',correctanswer=$answer WHERE qid=:qid");
+							$insertItem->bindParam(":question",$quesion);
+							$insertItem->bindParam(":one",$one);
+							$insertItem->bindParam(":two",$two);
+							$insertItem->bindParam(":three",$three);
+							$insertItem->bindParam(":four",$four);
+							$insertItem->bindParam(":qid",$id);
+							$insertItem->execute();
+						}
+						else
+						{
+							$insertItem = $db->prepare("UPDATE quiz_quizes SET question=:question,answerOne=:one,answerTwo=:two,answerThree=:three,answerFour='',answerFive='',correctanswer=$answer WHERE qid=:qid");
+							$insertItem->bindParam(":question",$quesion);
+							$insertItem->bindParam(":one",$one);
+							$insertItem->bindParam(":two",$two);
+							$insertItem->bindParam(":three",$three);
+							$insertItem->bindParam(":qid",$id);
+							$insertItem->execute();
+						}
+					}
+					
+					echo "inserted";
+						
+				}
+				
+				                               
             }
 	}
 }
