@@ -1,36 +1,30 @@
 /* CSS Document */
 
-#login
-{
-	width: 50%;
-    margin: 0 auto;
-}
-
-#register
+#register, #changePassword, #login
 {
 	width: 50%;
     margin: 0 auto;
 	display:table;
 }
 
-#register div
+#register div, #changePassword div, #login div
 {
 	display:table-row;
 }
 
-#register label
+#register label, #changePassword label, #login label
 {
 	display:table-cell;
 }
 
-#register input
+#register input, #changePassword input, #login input
 {
 	display:table-cell;
 	padding:5px;
 	margin:5px;
 }
 
-#register input[type=text], #register input[type=password]
+#register input[type=text], #register input[type=password], #changePassword input[type=text], #changePassword input[type=password], #login input[type=text], #login input[type=password]
 {
 	width:300px;
 }
@@ -101,7 +95,7 @@
 	border:2px solid #058700;
 }
 
-#listCatagory table
+#listCatagory table,#adminLog table
 {
 	width:900px;
 	max-width:900px;
@@ -109,19 +103,19 @@
 	border:1px solid #8ae45c;
 }
 
-#listCatagory td, #listCatagory th
+#listCatagory td, #listCatagory th,#adminLog td,#adminLog th
 {
 	padding:10px;
 	text-align:center;
 	border:1px solid #8ae45c;
 }
 
-#listCatagory th
+#listCatagory th,#adminLog th
 {
 	background-color:#8ae45c;
 }
 
-#listCatagory td > div
+#listCatagory td > div,#adminLog td > div
 {
 	max-width:400px;
 	overflow:hidden;

@@ -75,7 +75,7 @@ if(isset($_POST['register']))
 					{
 						$password = md5($password);
 						$error = "<div id=\"success\">Account has been created. You may Login now.</div>";
-						$insert = $db->prepare("INSERT INTO quiz_member (username,password,type,joindate) VALUES ('$username','$password',0,'$now')");
+						$insert = $db->prepare("INSERT INTO quiz_member (username,password,type,joindate,lastlogin) VALUES ('$username','$password',0,'$now','$now')");
 						$insert->execute();
 					}
 				}
@@ -96,13 +96,15 @@ $template->outPutHeader();
 $template->headerBlock();
 
 $template->navigationBlock();
+?>
 
+<div id="register">
+<?php 
 if(!empty($error))
 {
 	echo $error;
-}
+} 
 ?>
-<div id="register">
 <p>Registration Form: </p>
 <form action="register.php" method="post" id="registration">
 	<div><label for="r_username">Username: </label><input name="r_username" type="text" id="r_username"></div>

@@ -145,7 +145,7 @@ $(document).ready(function() {
 		var question = encodeURIComponent($("#questionText").val());
 		var answer = "";
 					
-		sendurl = "ajax.php?action=savetf&id="+qid+"&correct="+correct+"&question="+question;
+		sendurl = "ajax.php?action=savetf&cid="+cid+"&id="+qid+"&correct="+correct+"&question="+question;
 				
 		$.ajax({
 			type:"GET",
@@ -182,18 +182,18 @@ $(document).ready(function() {
 		
 		if(val == 5)
 		{
-			sendurl += "ajax.php?action=savemc&id="+qid+"&correct="+correct+"&question="+question+"&one="+one+"&two="+two+"&three="+three+"&four="+four+"&five="+five;
+			sendurl += "ajax.php?action=savemc&cid="+cid+"&id="+qid+"&correct="+correct+"&question="+question+"&one="+one+"&two="+two+"&three="+three+"&four="+four+"&five="+five;
 		}
 		if(val == 4)
 		{
-			sendurl += "ajax.php?action=savemc&id="+qid+"&correct="+correct+"&question="+question+"&one="+one+"&two="+two+"&three="+three+"&four="+four;
+			sendurl += "ajax.php?action=savemc&cid="+cid+"&id="+qid+"&correct="+correct+"&question="+question+"&one="+one+"&two="+two+"&three="+three+"&four="+four;
 		}
 		if(val == 3)
 		{
-			sendurl += "ajax.php?action=savemc&id="+qid+"&correct="+correct+"&question="+question+"&one="+one+"&two="+two+"&three="+three;
+			sendurl += "ajax.php?action=savemc&cid="+cid+"&id="+qid+"&correct="+correct+"&question="+question+"&one="+one+"&two="+two+"&three="+three;
 		}
 		
-		//alert($("#threeT").val());
+		$("#MCEdit").html(sendurl);
 										
 		$.ajax({
 			type:"GET",
@@ -203,7 +203,8 @@ $(document).ready(function() {
 			  if(data == "inserted")
 			  {
 				  window.location.href = "c_quiz.php?quiz_title_chosen="+cid+"&create_quiz=Choose+Quiz+Title";
-			  }                          
+			  }      
+			  
 			},
 		});
 		
@@ -217,6 +218,30 @@ $(document).ready(function() {
 			$.ajax({
 				type:"GET",
 				url:"ajax.php?action=deletequiz&id="+id,
+				dataType:"html",
+				success: function(data){
+				  if(data == "deleted")
+				  {
+					  $("."+id).hide("slow",function(){
+						window.location.reload();
+					  });
+				  }
+				  else
+				  {
+					  alert("Error Occured!");
+				  }
+				},
+			});
+		}
+	});
+	
+	$(".deleteUser").click(function(){
+		var id = $(this).attr("id");
+		if(confirm("Are you sure you want to delete this User?"))
+		{			
+			$.ajax({
+				type:"GET",
+				url:"ajax.php?action=deleteuser&mid="+id,
 				dataType:"html",
 				success: function(data){
 				  if(data == "deleted")

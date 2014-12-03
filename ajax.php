@@ -25,7 +25,22 @@ if(isset($_SESSION['u_name']))
 	
 	if($result->type == 1)
 		$isAdmin = 1;
-		
+	
+	if(isset($_GET['action']) && isset($_GET['mid']))
+	{
+		$action = mysql_real_escape_string(stripslashes(trim($_GET['action'])));
+        $memid     = mysql_real_escape_string(stripslashes(trim($_GET['mid'])));
+		if($isAdmin == 1)
+		{
+			if($action == "deleteuser")
+			{
+				$del = $db->prepare("DELETE FROM quiz_member WHERE mid=".$memid);
+				$del->execute();
+				
+				echo "deleted";
+			}
+		}
+	}
 	//User Create New Catagory
 	if(isset($_GET['action']) && isset($_GET['id']))
 	{
@@ -33,10 +48,19 @@ if(isset($_SESSION['u_name']))
             $id     = mysql_real_escape_string(stripslashes(trim($_GET['id'])));
 			$value  = "";
 			
+			if(isset($_GET['cid']))
+			{
+				$cid = mysql_real_escape_string(stripslashes(trim($_GET['cid'])));
+			}
+			else
+			{
+				$cid=0;
+			}
+			
 			if(isset($_GET['value']))
 				$value = $_GET['value'];			
             
-            $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$id);
+            $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$cid);
             $check->execute();
             $check->setFetchMode(PDO::FETCH_ASSOC);
             $checkResult = $check->fetch();
@@ -111,7 +135,7 @@ if(isset($_SESSION['u_name']))
 						echo "2";
 					}
 				} 
-				
+											
 				if($action == "savetf")
 				{
 					if(!isset($_GET['correct']))

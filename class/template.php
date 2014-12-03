@@ -86,29 +86,32 @@ class Template
 	{
 		$output  = "<nav id=\"navigation\">\n";
 		$output .= "\t<ul>\n";
-		$output .= "\t\t<li><a href=\"index.php\">Home</a></li>\n";
 		$output .= "\t\t<li><a href=\"#\">Quiz Management</a>\n";
 		$output .= "\t\t\t<ul>\n";
 		$output .= "\t\t\t\t<li><a href=\"c_catagory.php\">Create / Edit Quiz Title</a></li>\n";
 		$output .= "\t\t\t\t<li><a href=\"c_quiz.php\">Create / Edit Quiz Contents</a></li>\n";
 		$output .= "\t\t\t</ul>\n";
 		$output .= "\t\t</li>\n";
-		$output .= "\t\t<li><a href=\"#\">User Management</a>\n";
-		$output .= "\t\t\t<ul>\n";
-		$output .= "\t\t\t\t<li><a href=\"c_uinfo.php\">Edit User Info</a></li>\n";
-		$output .= "\t\t\t\t<li><a href=\"c_pass.php\">Profile Overview</a></li>\n";
-		$output .= "\t\t\t</ul>\n";
-		$output .= "\t\t</li>\n";
 		if($isadmin == 1)
 		{
 			$output .= "\t\t<li><a href=\"#\">Admin Panel</a>\n";
 			$output .= "\t\t\t<ul>\n";
-			$output .= "\t\t\t\t<li><a href=\"admin_log.php\">Latest User Log</a></li>\n";
-			$output .= "\t\t\t\t<li><a href=\"admin_e_user.php\">View / Delete User</a></li>\n";
+			$output .= "\t\t\t\t<li><a href=\"admin_user.php\">View / Delete User</a></li>\n";
 			$output .= "\t\t\t</ul>\n";
 			$output .= "\t\t</li>\n";
 		}
-		$output .= "\t\t<li><a href=\"faq.php\">FAQ</a></li>\n";
+		$output .= "\t\t<li><a href=\"#\">User Management</a>\n";
+		$output .= "\t\t\t<ul>\n";
+		$output .= "\t\t\t\t<li><a href=\"c_pass.php\">Change Password</a></li>\n";
+		$output .= "\t\t\t</ul>\n";
+		$output .= "\t\t</li>\n";		
+		$output .= "\t\t<li><a href=\"#\">Links</a>\n";
+		$output .= "\t\t\t<ul>\n";
+		$output .= "\t\t\t\t<li><a href=\"about.php\">About Us</a></li>\n";
+		$output .= "\t\t\t\t<li><a href=\"faq.php\">FAQ</a></li>\n";
+		$output .= "\t\t\t\t<li><a href=\"how.php\">How to Use</a></li>\n";
+		$output .= "\t\t\t</ul>\n";
+		$output .= "\t\t</li>\n";	
 		$output .= "\t</ul>\n";
 		$output .= "</nav>\n";
 		

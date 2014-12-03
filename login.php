@@ -2,6 +2,7 @@
 session_start();
 include("db.php");
 $now = date('Y-m-d H:i:s');
+$error = "";
 if(isset($_POST["login"]))
 {
     $username = $_POST["l_username"];
@@ -28,6 +29,10 @@ if(isset($_POST["login"]))
 						
 		header("location: member.php");
 	}
+	else
+	{
+		$error = "<div id=\"error\">Username or Password does not match.</div>";
+	}
 	
 }
 
@@ -43,14 +48,21 @@ $template->outPutHeader();
 $template->headerBlock();
 
 $template->navigationBlock();
+
 ?>
 
 <div id="login">
+<?php 
+if(!empty($error))
+{
+	echo $error;
+} 
+?>
 <p>Login Form: </p>
 <form action="login.php" method="post" id="login">
-	<label for="l_username">Username: </label><input name="l_username" type="text" id="l_username"><br>
-    <label for="l_password">Password: </label><input name="l_password" type="password" id="l_password"><br>  	
- 	<input type="submit" name="login" id="login" value="Login">
+	<div><label for="l_username">Username: </label><input name="l_username" type="text" id="l_username"></div>
+    <div><label for="l_password">Password: </label><input name="l_password" type="password" id="l_password"></div>  	
+ 	<div><label></label><input type="submit" name="login" id="login" value="Login"></div>
 </form>
 </div>
 
