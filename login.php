@@ -42,7 +42,7 @@ $template->outPutHeader();
 
 $template->headerBlock();
 
-$template->navigationBlockLogged($isAdmin);
+$template->navigationBlock();
 ?>
 
 <div id="login">

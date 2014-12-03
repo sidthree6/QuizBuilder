@@ -6,6 +6,35 @@
     margin: 0 auto;
 }
 
+#register
+{
+	width: 50%;
+    margin: 0 auto;
+	display:table;
+}
+
+#register div
+{
+	display:table-row;
+}
+
+#register label
+{
+	display:table-cell;
+}
+
+#register input
+{
+	display:table-cell;
+	padding:5px;
+	margin:5px;
+}
+
+#register input[type=text], #register input[type=password]
+{
+	width:300px;
+}
+
 #catagory_create
 {
 	display:table;              

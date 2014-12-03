@@ -115,26 +115,16 @@ class Template
 		echo $output;
 	}
 	
-	public function sidebarBlock($isadmin = 0)
+	public function navigationBlock()
 	{
-		$output  = "<div id=\"sidebar\">\n";
-		$output .= "\t<nav>\n";
-		$output .= "\t\t<ul>\n";
-		$output .= "\t\t\t<li><a class=\"header\">Quiz Management</a></li>\n";
-		$output .= "\t\t\t<li><a href=\"c_catagory.php\" class=\"items\">Create / Edit Quiz Title</a></li>\n";
-		$output .= "\t\t\t<li><a href=\"c_quiz.php\" class=\"items\">Create / Edit Quiz Contents</a></li>\n";
-		$output .= "\t\t\t<li><a class=\"header\">User Management</a></li>\n";
-		$output .= "\t\t\t<li><a href=\"e_uinfo.php\" class=\"items\">Edit User Info</a></li>\n";
-		$output .= "\t\t\t<li><a href=\"c_pass.php\" class=\"items\">Change Password</a></li>\n";
-		if($isadmin == 1)
-		{
-			$output .= "\t\t\t<li><a class=\"header\">Admin Panel</a></li>\n";
-			$output .= "\t\t\t<li><a href=\"admin_log.php\" class=\"items\">Latest User Log</a></li>\n";
-			$output .= "\t\t\t<li><a href=\"admin_e_user.php\" class=\"items\">View / Delete User</a></li>\n";
-		}
-		$output .= "\t\t</ul>\n";
-		$output .= "\t</nav>\n";
-		$output .= "</div>\n";
+		$output  = "<nav id=\"navigation\">\n";
+		$output .= "\t<ul>\n";
+		$output .= "\t\t<li><a href=\"index.php\">Home</a></li>\n";
+		$output .= "\t\t<li><a href=\"about.php\">About Us</a>\n";
+		$output .= "\t\t<li><a href=\"how.php\">How to Use</a>\n";
+		$output .= "\t\t<li><a href=\"faq.php\">FAQ</a></li>\n";
+		$output .= "\t</ul>\n";
+		$output .= "</nav>\n";
 		
 		echo $output;
 	}
