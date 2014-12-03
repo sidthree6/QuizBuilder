@@ -94,7 +94,7 @@ if(isset($_GET['id']) && isset($_GET['cid']))
 	{
 		$output .= "Number of Options: <select id=\"howmanyoption\"><option value=\"3\" $threechecked>Three</option><option value=\"4\" $fourchecked>Four</option><option value=\"5\" $fivechecked>Five</option></select>\n<br/><br/>";
 	}
-	$output .= "<textarea id=\"questionText\">".$quizQ->question."</textarea>\n<br/>";
+	$output .= "<textarea id=\"questionText\" cols=\"125\" rows=\"3\">".$quizQ->question."</textarea>\n<br/>";
 	
 	$countquestion = 0;
 	$checked = "";
@@ -107,7 +107,7 @@ if(isset($_GET['id']) && isset($_GET['cid']))
 		{
 			if($quizQ->correctanswer == 1)
 				$checked = "checked=checked";                                       
-			$output .= "<input type=\"radio\" name=\"answer\" value=\"one\" $checked> <textarea id=\"oneT\">".$quizQ->answerOne."</textarea>\n<br/>";
+			$output .= "<input type=\"radio\" name=\"answer\" value=\"one\" $checked> <textarea id=\"oneT\" cols=\"121\">".$quizQ->answerOne."</textarea>\n<br/>";
 
 			$checked = "";
 		}
@@ -118,7 +118,7 @@ if(isset($_GET['id']) && isset($_GET['cid']))
 		{
 			if($quizQ->correctanswer == 2)
 				$checked = "checked=checked";
-			$output .= "<input type=\"radio\" name=\"answer\" value=\"two\" $checked> <textarea id=\"twoT\">".$quizQ->answerTwo."</textarea>\n<br/>";
+			$output .= "<input type=\"radio\" name=\"answer\" value=\"two\" $checked> <textarea id=\"twoT\" cols=\"121\">".$quizQ->answerTwo."</textarea>\n<br/>";
 
 			$checked = "";
 		}  
@@ -129,7 +129,7 @@ if(isset($_GET['id']) && isset($_GET['cid']))
 		{
 			if($quizQ->correctanswer == 3)
 				$checked = "checked=checked";
-			$output .= "<input type=\"radio\" name=\"answer\" value=\"three\" $checked> <textarea id=\"threeT\">".$quizQ->answerThree."</textarea>\n<br/>";
+			$output .= "<input type=\"radio\" name=\"answer\" value=\"three\" $checked> <textarea id=\"threeT\" cols=\"121\">".$quizQ->answerThree."</textarea>\n<br/>";
 
 			$checked = "";
 		}             
@@ -140,7 +140,7 @@ if(isset($_GET['id']) && isset($_GET['cid']))
 		{
 			if($quizQ->correctanswer == 4)
 				$checked = "checked=checked";
-			$output .= "<input type=\"radio\" name=\"answer\" value=\"four\" $checked> <textarea id=\"fourT\">".$quizQ->answerFour."</textarea>\n<br/>";
+			$output .= "<input type=\"radio\" name=\"answer\" value=\"four\" $checked> <textarea id=\"fourT\" cols=\"121\">".$quizQ->answerFour."</textarea>\n<br/>";
 
 			$checked = "";
 		}          
@@ -151,7 +151,7 @@ if(isset($_GET['id']) && isset($_GET['cid']))
 		{
 			if($quizQ->correctanswer == 5)
 				$checked = "checked=checked";
-			$output .= "<input type=\"radio\" name=\"answer\" value=\"five\" $checked> <textarea id=\"fiveT\">".$quizQ->answerFive."</textarea>\n<br/>";
+			$output .= "<input type=\"radio\" name=\"answer\" value=\"five\" $checked> <textarea id=\"fiveT\" cols=\"121\">".$quizQ->answerFive."</textarea>\n<br/>";
 
 			$checked = "";
 		}

@@ -1,22 +1,32 @@
 <?php
 
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: template.php
+ * 
+ * Description: this file contains a basic html code inside a class so html stays consistent on all pages  
+ */
 class Template
 {
 	private $title;
 	private $script;
 	private $style;
 		
+        // Constructor of the class
 	function __construct($input="",$inputTwo=array(),$inputThree=array()) {
 		$this->setTitle($input);
 		$this->setScript($inputTwo);
 		$this->setStyle($inputThree);
 	}
 	
+        // Set the title for html document
 	protected function setTitle($input)
 	{
 		$this->title = $input;
 	}
 	
+        // Append all scripts required by html
 	protected function setScript($input)
 	{
 		for($i=0;$i<count($input);$i++)
@@ -25,6 +35,7 @@ class Template
 		}
 	}
 	
+        // Append all styles required by html
 	protected function setStyle($input)
 	{
 		for($i=0;$i<count($input);$i++)
@@ -33,6 +44,7 @@ class Template
 		}
 	}
 	
+        // Output basic html starting tags
 	public function outPutHeader()
 	{
 		$output  = "<!doctype html>\n";
@@ -54,14 +66,17 @@ class Template
 		echo $output;
 	}
 	
+        // Output basic html ending tags
 	public function outputFooter()
 	{
-		$output  = "</div>\n</body>\n";
+		$output  = "<footer>QuizBuilder &#169; 2014</footer></div>\n";
+                $output .= "</body>\n";
 		$output .= "</html>";
 		
 		echo $output;
 	}
 	
+        // Output header block
 	public function headerBlock($logged=0)
 	{		
 		$output  = "<div id=\"header\">\n<header>\n";
@@ -82,6 +97,7 @@ class Template
 		echo $output;
 	}
 	
+        // Output navigation panel for loggedin user
 	public function navigationBlockLogged($isadmin = 0)
 	{
 		$output  = "<nav id=\"navigation\">\n";
@@ -108,7 +124,6 @@ class Template
 		$output .= "\t\t<li><a href=\"#\">Links</a>\n";
 		$output .= "\t\t\t<ul>\n";
 		$output .= "\t\t\t\t<li><a href=\"about.php\">About Us</a></li>\n";
-		$output .= "\t\t\t\t<li><a href=\"faq.php\">FAQ</a></li>\n";
 		$output .= "\t\t\t\t<li><a href=\"how.php\">How to Use</a></li>\n";
 		$output .= "\t\t\t</ul>\n";
 		$output .= "\t\t</li>\n";	
@@ -118,6 +133,7 @@ class Template
 		echo $output;
 	}
 	
+        //Output navigation for not loggedin user
 	public function navigationBlock()
 	{
 		$output  = "<nav id=\"navigation\">\n";
@@ -125,7 +141,6 @@ class Template
 		$output .= "\t\t<li><a href=\"index.php\">Home</a></li>\n";
 		$output .= "\t\t<li><a href=\"about.php\">About Us</a>\n";
 		$output .= "\t\t<li><a href=\"how.php\">How to Use</a>\n";
-		$output .= "\t\t<li><a href=\"faq.php\">FAQ</a></li>\n";
 		$output .= "\t</ul>\n";
 		$output .= "</nav>\n";
 		

@@ -101,10 +101,18 @@ if(isset($_GET['quiz_title_chosen']) && isset($_GET['create_quiz']))
         else
         {
             $count=1;
-            echo "<table style=\"border:0px;width:300px\">";
+            ?>
+            <table cellspacing="0">
+                <tr><th style="width:10px">Index</th><th>Question</th><th style="width:100px">Question Type</th><th style="width:50px">Action</th></tr>
+            <?php
             foreach($getquiz as $r)
             {
-                echo "\n<tr class=\"".$r['qid']."\" id=\"questionOut\"><td>".$count.")</td><td style=\"width:220px;overflow:hidden\">".$r['question']."</td><td><a href=\"getQuiz.php?id=".$r['qid']."&cid=".$r['cid']."\"><img src=\"images/edit.png\" class=\"editQuiz\" id=\"".$r['qid']."\" /></a> <img src=\"images/delete.png\" class=\"deleteQuiz\" id=\"".$r['qid']."\" /></td></tr>\n";
+                $typeQ = "";
+                if($r['mcortf'] == 1)
+                    $typeQ = "Multiple Choice";
+                else
+                    $typeQ = "True / False";
+                echo "\n<tr class=\"".$r['qid']."\" id=\"questionOut\"><td>".$count.")</td><td style=\"width:220px;overflow:hidden\">".$r['question']."</td><td>$typeQ</td><td><a href=\"getQuiz.php?id=".$r['qid']."&cid=".$r['cid']."\"><img src=\"images/edit.png\" class=\"editQuiz\" id=\"".$r['qid']."\" /></a> <img src=\"images/delete.png\" class=\"deleteQuiz\" id=\"".$r['qid']."\" /></td></tr>\n";
                 $count++;
             }
             echo "</table>";

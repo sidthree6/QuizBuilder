@@ -8,12 +8,15 @@ $(document).ready(function() {
 		$("#"+editID).html("<label>Catagory Title: </label><input type=\"text\" name=\"c_name\" value=\""+value+"\" id=\"c_edit_name\">");
 		
                 $(".saveEdit").click(function(){
-                    var editVal = $("#c_edit_name").val();                   
+                    var editVal = $("#c_edit_name").val(); 
+                    
+                    var sendurl = "ajax.php?action=edit&id="+editID+"&value="+editVal;
+                    
                     var id = $(this).attr("id");
 					
 					$.ajax({
                         type:"GET",
-                        url:"ajax.php?action=edit&id="+id+"&value="+editVal,
+                        url:sendurl,
                         dataType:"html",
                         success: function(data){
                           if(data == "edited")
@@ -87,7 +90,7 @@ $(document).ready(function() {
 			success: function(data){
 			  if(data == "1" || data == "2")
 			  {
-				  location.reload();
+				  window.location.reload();
 			  }                          
 			},
 		});
@@ -193,7 +196,7 @@ $(document).ready(function() {
 			sendurl += "ajax.php?action=savemc&cid="+cid+"&id="+qid+"&correct="+correct+"&question="+question+"&one="+one+"&two="+two+"&three="+three;
 		}
 		
-		$("#MCEdit").html(sendurl);
+		
 										
 		$.ajax({
 			type:"GET",
@@ -214,7 +217,7 @@ $(document).ready(function() {
 		var id = $(this).attr("id");
 		
 		if(confirm("Are you sure you want to delete?"))
-		{			
+		{
 			$.ajax({
 				type:"GET",
 				url:"ajax.php?action=deletequiz&id="+id,

@@ -1,6 +1,13 @@
 <?php
-session_start();
-include("db.php");
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: ajax.php
+ * 
+ * Description: This file will handle all ajax request from php side.  
+ */
+session_start(); // Start session
+include("db.php"); // Include database
 
 $isAdmin = 0; // Is user Admin?
 $output = "";
@@ -26,12 +33,14 @@ if(isset($_SESSION['u_name']))
 	if($result->type == 1)
 		$isAdmin = 1;
 	
+        // If action and member id is defined
 	if(isset($_GET['action']) && isset($_GET['mid']))
 	{
 		$action = mysql_real_escape_string(stripslashes(trim($_GET['action'])));
-        $memid     = mysql_real_escape_string(stripslashes(trim($_GET['mid'])));
+                $memid     = mysql_real_escape_string(stripslashes(trim($_GET['mid'])));
 		if($isAdmin == 1)
 		{
+                    //Delete the user
 			if($action == "deleteuser")
 			{
 				$del = $db->prepare("DELETE FROM quiz_member WHERE mid=".$memid);
@@ -46,26 +55,36 @@ if(isset($_SESSION['u_name']))
 	{
             $action = mysql_real_escape_string(stripslashes(trim($_GET['action'])));
             $id     = mysql_real_escape_string(stripslashes(trim($_GET['id'])));
-			$value  = "";
-			
-			if(isset($_GET['cid']))
-			{
-				$cid = mysql_real_escape_string(stripslashes(trim($_GET['cid'])));
-			}
-			else
-			{
-				$cid=0;
-			}
-			
-			if(isset($_GET['value']))
-				$value = $_GET['value'];			
+            $value  = "";
+            $cid = 0;
+            if(isset($_GET['cid']))
+            {
+                    $cid = mysql_real_escape_string(stripslashes(trim($_GET['cid'])));
+            }
+            else
+            {
+                    $cid=0;
+            }
+
+            if(isset($_GET['value']))
+                    $value = $_GET['value'];			
+
+            $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$id);
             
-            $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$cid);
+            if($action == "delete")
+                $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$id);
+            if($action == "deletequiz")
+                $check = $db->prepare("SELECT mid FROM quiz_quizes WHERE qid=".$id);
+            if($action == "addquiz")
+                $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$id);
+            if($action == "savemc" || $action == "savetf")
+                $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$cid);
+            
             $check->execute();
             $check->setFetchMode(PDO::FETCH_ASSOC);
             $checkResult = $check->fetch();
             
-			// Only perform action if right user is performing action or user is an admin
+            // Only perform action if right user is performing action or user is an admin
             if($checkResult['mid'] == $mid || $isAdmin == 1)
             {
 				// Delete Title

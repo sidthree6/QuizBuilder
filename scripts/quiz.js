@@ -13,7 +13,7 @@ $(document).ready(function() {
 		var count = 1;
 		output += "<form action=\"checkresult.php\" method=\"get\">";
 		$.each(xml, function(index,xml) {        
-       		output += "<div id=\"question\">"+count+") "+xml.question+"</div>";
+       		output += "<div id=\"qBlock\"><div id=\"question\">"+count+") "+xml.question+"</div>";
 			output += "<div id=\"answers\">";
 			if(xml.answerOne != "")
 			{
@@ -36,7 +36,7 @@ $(document).ready(function() {
 				output += "<div id=\"answerBox\"><input type=\"radio\" name=\""+xml.qid+"\" value=\"five\"> <label>"+xml.answerFive+"</label></div>";
 			}
 			output += "</select>";
-			output += "</div>";
+			output += "</div></div>";
 			
 			count++;
         });
