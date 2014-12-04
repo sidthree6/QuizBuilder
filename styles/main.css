@@ -164,3 +164,25 @@ footer{
     color:#1f1f1f;
     text-align: center;
 }
+
+#register #error, #login #error
+{
+	padding:10px;
+	background-color:#FFB7B8;
+	width:690px;
+	font-size:12px;
+	color:#B40003;
+	font-weight:bold;
+	border:2px solid #B40003;
+}
+
+#register #success, #login #success
+{
+	padding:10px;
+	background-color:#B5FFBD;
+	width:690px;
+	font-size:12px;
+	color:#058700;
+	font-weight:bold;
+	border:2px solid #058700;
+}

@@ -36,8 +36,10 @@ if(isset($_SESSION['u_name']))
         // If action and member id is defined
 	if(isset($_GET['action']) && isset($_GET['mid']))
 	{
+		// Store values in a string
 		$action = mysql_real_escape_string(stripslashes(trim($_GET['action'])));
-                $memid     = mysql_real_escape_string(stripslashes(trim($_GET['mid'])));
+        $memid     = mysql_real_escape_string(stripslashes(trim($_GET['mid'])));
+		//Check if its an admin, because only admin can delete user
 		if($isAdmin == 1)
 		{
                     //Delete the user
@@ -53,6 +55,7 @@ if(isset($_SESSION['u_name']))
 	//User Create New Catagory
 	if(isset($_GET['action']) && isset($_GET['id']))
 	{
+			// Get action and ID, and also value if its set
             $action = mysql_real_escape_string(stripslashes(trim($_GET['action'])));
             $id     = mysql_real_escape_string(stripslashes(trim($_GET['id'])));
             $value  = "";
@@ -70,7 +73,7 @@ if(isset($_SESSION['u_name']))
                     $value = $_GET['value'];			
 
             $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$id);
-            
+            // Change SQL query based on which actions were specified to check if its the same user editing content who has created it
             if($action == "delete")
                 $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$id);
             if($action == "deletequiz")
@@ -79,7 +82,7 @@ if(isset($_SESSION['u_name']))
                 $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$id);
             if($action == "savemc" || $action == "savetf")
                 $check = $db->prepare("SELECT mid FROM quiz_catagory WHERE cid=".$cid);
-            
+            // Execute
             $check->execute();
             $check->setFetchMode(PDO::FETCH_ASSOC);
             $checkResult = $check->fetch();
@@ -90,9 +93,10 @@ if(isset($_SESSION['u_name']))
 				// Delete Title
 				if($action == "delete")
 				{
+					// Delete the Quiz Title
 					$del = $db->prepare("DELETE FROM quiz_catagory WHERE cid=".$id);
 					$del->execute();
-					
+					// Also delete all the quiz question under that title
 					$del = $db->prepare("DELETE FROM quiz_quizes WHERE cid=".$id);
 					$del->execute();
 					
@@ -101,6 +105,7 @@ if(isset($_SESSION['u_name']))
 				//Delete Quiz
 				if($action == "deletequiz")
 				{
+					// Delete specified quiz
 					$del = $db->prepare("DELETE FROM quiz_quizes WHERE qid=".$id);
 					$del->execute();						
 					
@@ -109,13 +114,16 @@ if(isset($_SESSION['u_name']))
 				// Edit Title
 				if($action == "edit" && !empty($value))
 				{
+					// Get value of edited title
 					$value = mysql_real_escape_string(stripslashes(trim($value)));
-					if(strlen($value) < 0 || strlen($value) > 100)
+					// Title cant be less than 1 or more than 100 word
+					if(strlen($value) < 1 || strlen($value) > 100)
 					{
 						echo "wrongsize";
 					}
 					else
 					{
+						// Update the quiz title
 						$edit = $db->query("UPDATE quiz_catagory SET title='".$value."' WHERE cid=".$id);
 						echo "edited";
 					}
@@ -123,6 +131,7 @@ if(isset($_SESSION['u_name']))
 				
 				if($action == "addquiz" && !empty($value))
 				{
+					// Add quiz to database
 					if($value == "mc")
 					{
 						$question     = "Sample Question";
@@ -132,14 +141,12 @@ if(isset($_SESSION['u_name']))
 						$answerFour   = "Option Four";
 						$correctanswer= 1;
 						$mcortf		  = 1;
-						
+						// Insert sample questions and option to database, so user can edit it later.
 						$db->query("INSERT INTO quiz_quizes (mid,cid,question,answerOne,answerTwo,answerThree,answerFour,correctanswer,mcortf,datecreated) VALUES ($mid,$id,'$question','$answerOne','$answerTwo','$answerThree','$answerFour',$correctanswer,$mcortf,'$now')");
-						
-						/*$db->query("INSERT INTO quiz_quizes (mid,cid,question) VALUES ($mid,$id,'Sample Question')");*/
-						
+											
 						echo "1";
 					}
-                                        if($value == "tf")
+                    if($value == "tf")
 					{
 						$question     = "Sample True/False Question";
 						$answerOne    = "True";
@@ -148,15 +155,14 @@ if(isset($_SESSION['u_name']))
 						$mcortf	      = 2;
 						
 						$db->query("INSERT INTO quiz_quizes (mid,cid,question,answerOne,answerTwo,correctanswer,mcortf,datecreated) VALUES ($mid,$id,'$question','$answerOne','$answerTwo',$correctanswer,$mcortf,'$now')");
-						
-						/*$db->query("INSERT INTO quiz_quizes (mid,cid,question) VALUES ($mid,$id,'Sample Question')");*/
-						
+												
 						echo "2";
 					}
 				} 
 											
 				if($action == "savetf")
 				{
+					// If some requires items are not found, redirect user to main page.
 					if(!isset($_GET['correct']))
 						header("location: c_quiz.php");
 					if(!isset($_GET['question']))
@@ -169,9 +175,10 @@ if(isset($_SESSION['u_name']))
 						$answer=1;
 					else
 						$answer=2;
-						
+					
+					// Update true and false question and store the answer.	
 					$insertItem = $db->prepare("UPDATE quiz_quizes SET question=:question,correctanswer=$answer WHERE qid=:qid");
-					$insertItem->bindParam(":question",$quesion);
+					$insertItem->bindParam(":question",$quesion); // Bind params
 					$insertItem->bindParam(":qid",$id);
 					$insertItem->execute();
 					echo "inserted";
@@ -180,6 +187,7 @@ if(isset($_SESSION['u_name']))
 				
 				if($action == "savemc")
 				{
+					// Similar process but with multiple choise
 					if(!isset($_GET['correct']))
 						header("location: c_quiz.php");
 					if(!isset($_GET['question']))

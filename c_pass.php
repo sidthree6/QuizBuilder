@@ -1,4 +1,11 @@
 <?php
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: c_pass.php
+ * 
+ * Description: This file contains data where loggedin user can change their password.  
+ */
 session_start();
 include("db.php");
 
@@ -11,6 +18,7 @@ $error = "";
 
 if(isset($_SESSION['u_name']))
 {
+	// Check is user is logged in.
 	$query = $db->prepare("SELECT * FROM quiz_member WHERE username = :username");
 	$query->bindParam(":username",$_SESSION['u_name']);
 	$query->execute();
@@ -26,15 +34,13 @@ if(isset($_SESSION['u_name']))
 	
 	if($result->type == 1)
 		$isAdmin = 1;
-		
-	//User Create New Catagory
-	
+
 }
 else
 {
 	header("location: index.php");
 }
-
+// Include necessary html class
 include("class/template.php");
 
 $scripts = array("main.js");
@@ -56,22 +62,26 @@ if(isset($_POST['change']))
 	
 	if(empty($cpass) || empty($npass) || empty($nrpass))
 	{
+		// If any fields are empty
 		$error = "<div id=\"error\">Please Fill All Fields.</div>";
 	}
 	else
 	{
+		// If password size is wrong
 		if(strlen($npass) > 20 || strlen($npass) < 5)
 		{
 			$error = "<div id=\"error\">Password must be between 5 to 20 character.</div>";
 		}
 		else
 		{
+			// If new and retype password doesnt match
 			if($npass != $nrpass)
 			{
 				$error = "<div id=\"error\">New Password and Retype New Password does not match.</div>";
 			}
 			else
 			{
+				// If current password doesnt match with password in database
 				$cpass = md5($cpass);
 				$checpass = $db->prepare("SELECT password FROM quiz_member WHERE password=:password AND mid=$mid");
 				$checpass->bindParam(":password",$cpass);
@@ -83,6 +93,7 @@ if(isset($_POST['change']))
 				}
 				else
 				{
+					// If all data is correct and no error found, Update the password with new password
 					$error = "<div id=\"success\">Password has ben changed.</div>";
 					$npass = md5($npass);
 					$updatepass = $db->prepare("UPDATE quiz_member SET password=:pass WHERE mid=$mid");

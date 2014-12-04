@@ -1,4 +1,11 @@
 <?php
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: checkresult.php
+ * 
+ * Description: This file contains data where person who completed quiz can view result.  
+ */
 session_start();
 include("db.php");
 
@@ -10,6 +17,7 @@ $username = "";
 
 if(isset($_SESSION['u_name']))
 {
+	// Check is user is logged in.
 	$query = $db->prepare("SELECT * FROM quiz_member WHERE username = :username");
 	$query->bindParam(":username",$_SESSION['u_name']);
 	$query->execute();
@@ -25,15 +33,13 @@ if(isset($_SESSION['u_name']))
 	
 	if($result->type == 1)
 		$isAdmin = 1;
-		
-	//User Create New Catagory
-	
+
 }
 else
 {
 	header("location: index.php");
 }
-
+// Include necessary html class
 include("class/template.php");
 
 $scripts = array("main.js","member.js","quiz.js");
@@ -47,7 +53,6 @@ $template->headerBlock(1);
 
 $template->navigationBlockLogged($isAdmin);
 
-//$template->sidebarBlock($isAdmin);
 ?>
 
 <article id="content">
@@ -57,6 +62,7 @@ if(!isset($_GET['id']))
 
 $id = mysql_real_escape_string(stripslashes(trim($_GET['id'])));
 
+// Get quiz by id
 $catagory = $db->prepare("SELECT * FROM quiz_catagory WHERE cid=$id");
 $catagory->execute();
 $catagory->setFetchMode(PDO::FETCH_OBJ);
@@ -88,7 +94,7 @@ $getCat = $catagory->fetch();
 				$answer = 4;
 			if($value == "five")
 				$answer = 5;
-			
+			// Check if the answer user entered matches in database
 			$checkAns = $db->prepare("SELECT * FROM quiz_quizes WHERE qid=$key AND correctanswer=$answer");	
 			$checkAns->execute();
 			
@@ -98,10 +104,11 @@ $getCat = $catagory->fetch();
 			}
 			
 		}
-		
+		// Calculate average
 		$avg = ($currentmark/$total)*100;
 		$avg = number_format((float)$avg, 2, '.', '');
 		
+		// Output average
 		?>
         <table cellspacing="0">
         	<tr><td>Total Questions: </td><td><?php echo $total; ?></td></tr>

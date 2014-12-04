@@ -1,17 +1,26 @@
 <?php
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: login.php
+ * 
+ * Description: This is where user can login into website  
+ */
 session_start();
 include("db.php");
 $now = date('Y-m-d H:i:s');
 $error = "";
 if(isset($_POST["login"]))
 {
+	// IF user has submited login form
     $username = $_POST["l_username"];
     $password = $_POST["l_password"];
     
+	// Get username and password and remove unwanted characters
     $username = mysql_real_escape_string(stripslashes($username));
     $password = mysql_real_escape_string(stripslashes($password));
     
-	$password = md5($password);
+	$password = md5($password); // Hash the password to check, because during registration only hash password is inserted
     $query = $db->prepare("SELECT * FROM quiz_member WHERE username = :username AND password = :password");
 	
 	$query->bindParam(":username",$username);
@@ -22,7 +31,8 @@ if(isset($_POST["login"]))
 	$affectedRow = $query->rowCount();
 	
 	if($affectedRow == 1)
-	{		
+	{
+		// If user with the same password already exists, login and create session.		
 		$_SESSION["u_name"] = $username;
 				
 		$db->query("UPDATE quiz_member SET logged=1,lastlogin='$now' WHERE username='$username'");

@@ -1,4 +1,11 @@
 <?php
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: index.php
+ * 
+ * Description: Main page of the website  
+ */
 session_start();
 include("db.php");
 

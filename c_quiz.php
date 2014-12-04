@@ -1,4 +1,11 @@
 <?php
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: c_quiz.php
+ * 
+ * Description: This file contains data where loggedin user can edit qestions in existing quiz title.  
+ */
 session_start();
 include("db.php");
 
@@ -10,6 +17,7 @@ $username = "";
 
 if(isset($_SESSION['u_name']))
 {
+	// Check is user is logged in.
 	$query = $db->prepare("SELECT * FROM quiz_member WHERE username = :username");
 	$query->bindParam(":username",$_SESSION['u_name']);
 	$query->execute();
@@ -25,15 +33,13 @@ if(isset($_SESSION['u_name']))
 	
 	if($result->type == 1)
 		$isAdmin = 1;
-		
-	//User Create New Catagory
-	
+
 }
 else
 {
 	header("location: index.php");
 }
-
+// Include necessary html class
 include("class/template.php");
 
 $scripts = array("main.js");
@@ -47,12 +53,12 @@ $template->headerBlock(1);
 
 $template->navigationBlockLogged($isAdmin);
 
-//$template->sidebarBlock($isAdmin);
 ?>
 
 <article id="content">
 
 <?php
+// Get all catagories which user can edit in
 $getcatagory = $db->prepare("SELECT * FROM quiz_catagory WHERE mid=".$mid);
 $getcatagory->execute();
 
@@ -62,8 +68,10 @@ $numCatagory = $getcatagory->rowCount();
 <?php
 if(isset($_GET['quiz_title_chosen']) && isset($_GET['create_quiz']))
 {
+	// If catagory is chosen
 	$cid = mysql_real_escape_string(stripslashes(trim($_GET['quiz_title_chosen'])));
 	
+	// Get all quizes questions from the catagory selected
 	$getquiz = $db->prepare("SELECT * FROM quiz_quizes WHERE cid=".$cid." AND mid=".$mid);
 	$getquiz->execute();
         $getquiz->setFetchMode(PDO::FETCH_ASSOC);

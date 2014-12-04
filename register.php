@@ -1,68 +1,53 @@
 <?php
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: register.php
+ * 
+ * Description: Registration Page  
+ */
 session_start();
 include("db.php");
 $now = date('Y-m-d H:i:s');
-if(isset($_POST["login"]))
-{
-    $username = $_POST["l_username"];
-    $password = $_POST["l_password"];
-    
-    $username = mysql_real_escape_string(stripslashes($username));
-    $password = mysql_real_escape_string(stripslashes($password));
-    
-	$password = md5($password);
-    $query = $db->prepare("SELECT * FROM quiz_member WHERE username = :username AND password = :password");
-	
-	$query->bindParam(":username",$username);
-	$query->bindParam(":password",$password);
-	
-	$query->execute();
-	
-	$affectedRow = $query->rowCount();
-	
-	if($affectedRow == 1)
-	{		
-		$_SESSION["u_name"] = $username;
-				
-		$db->query("UPDATE quiz_member SET logged=1,lastlogin='$now' WHERE username='$username'");
-						
-		header("location: member.php");
-	}
-	
-}
 
 $error = "";
 
 if(isset($_POST['register']))
 {
+	// Get value of username and password when registration form is submited
 	$username = mysql_real_escape_string(stripslashes(trim($_POST['r_username'])));
 	$password = mysql_real_escape_string(stripslashes(trim($_POST['r_password'])));
 	$repass = mysql_real_escape_string(stripslashes(trim($_POST['r_rpassword'])));
 	
 	if(empty($username) || empty($password) || empty($repass))
 	{
+		//Return error if any field is empty
 		$error = "<div id=\"error\">Please Fill All Fields.</div>";
 	}
 	else
 	{
 		if(strlen($username) > 50 || strlen($username) < 2)
 		{
+			// IF wrong username size
 			$error = "<div id=\"error\">Username must be between 2 to 50 character.</div>";
 		}
 		else
 		{
 			if(strlen($password) > 20 || strlen($password) < 5)
 			{
+				//IF wrong password size
 				$error = "<div id=\"error\">Password must be between 5 to 20 character.</div>";
 			}
 			else
 			{
 				if($password != $repass)
 				{
+					// If password and retype password doesnt match
 					$error = "<div id=\"error\">Password and Re-Password does not match.</div>";
 				}
 				else
 				{
+					// Check if user already exists
 					$checkuser = $db->prepare("SELECT username FROM quiz_member WHERE username=:username");
 					$checkuser->bindParam(":username",$username);
 					$checkuser->execute();
@@ -73,6 +58,7 @@ if(isset($_POST['register']))
 					}
 					else
 					{
+						// If no error, insert username and hashed password in database.
 						$password = md5($password);
 						$error = "<div id=\"success\">Account has been created. You may Login now.</div>";
 						$insert = $db->prepare("INSERT INTO quiz_member (username,password,type,joindate,lastlogin) VALUES ('$username','$password',0,'$now','$now')");

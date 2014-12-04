@@ -1,4 +1,11 @@
 <?php
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: genQuiz.php
+ * 
+ * Description: Get quiz to edit by id supplied.  
+ */
 session_start();
 include("db.php");
 
@@ -10,6 +17,7 @@ $username = "";
 
 if(isset($_SESSION['u_name']))
 {
+	// Check is user is logged in.
 	$query = $db->prepare("SELECT * FROM quiz_member WHERE username = :username");
 	$query->bindParam(":username",$_SESSION['u_name']);
 	$query->execute();
@@ -26,8 +34,6 @@ if(isset($_SESSION['u_name']))
 	if($result->type == 1)
 		$isAdmin = 1;
 		
-	//User Create New Catagory
-	
 }
 else
 {
@@ -55,9 +61,11 @@ $template->navigationBlockLogged($isAdmin);
 <?php
 if(isset($_GET['id']) && isset($_GET['cid']))
 {
+	// Get quiz id and quiztitle id
 	$qid = mysql_real_escape_string(stripslashes(trim($_GET['id'])));
 	$cid = mysql_real_escape_string(stripslashes(trim($_GET['cid'])));
 	
+	// Get quiz by id, only if user who posted is editing
 	$getQuestion = $db->prepare("SELECT * FROM quiz_quizes WHERE qid=$qid AND mid=$mid");
 	$getQuestion->execute();
 	
@@ -183,6 +191,10 @@ if(isset($_GET['id']) && isset($_GET['cid']))
 	$output .= "<input type=\"hidden\" value=\"".$cid."\" id=\"hiddenCid\">";	
 	$output .= "<input type=\"hidden\" value=\"".$qid."\" id=\"hiddenQid\">";								
 	$output .= "<input type=\"button\" value=\"Save Quiz\" name=\"saveQuiz\" id=\"saveQuiz_".$quizQ->mcortf."\"> <input type=\"button\" value=\"Close Without Saving\" name=\"closeQuiz\" id=\"closeQuiz\">";
+	
+	/*
+	Above code snippet gets how many field is selected by quiz maker and only show specified field. It also input only selected amount of field in database with correct answer.
+	*/
 	
 	echo $output;
 	

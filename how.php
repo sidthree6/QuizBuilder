@@ -1,8 +1,16 @@
 <?php
-session_start();
-include("db.php");
-$isAdmin = 0;
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: how.php
+ * 
+ * Description: How to Use page  
+ */
+session_start(); // Start the session to check loggedin user
+include("db.php"); // Include database connection file
+$isAdmin = 0; // Store admin priviliage
 $logged = 0;
+// Check if user is logged in
 if(isset($_SESSION['u_name']))
 {
 	$query = $db->prepare("SELECT * FROM quiz_member WHERE username = :username");
@@ -15,7 +23,7 @@ if(isset($_SESSION['u_name']))
         if($result->type == 1)
 		$isAdmin = 1;
 }
-
+// Include template
 include("class/template.php");
 
 $scripts = array("main.js","http://code.jquery.com/jquery-latest.min.js","");

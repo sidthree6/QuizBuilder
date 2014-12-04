@@ -1,5 +1,10 @@
-// JavaScript Document
-
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: quiz.js
+ * 
+ * Description: This javascript document, ajax is called to get data from genXML and displayed to user who wants to do quiz.  
+ */
 $(document).ready(function() {
 	var id = $("#hiddenID").val();
 	

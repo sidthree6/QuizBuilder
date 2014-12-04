@@ -1,3 +1,11 @@
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: main.js
+ * 
+ * Description: This file contains almost all ajax request which is required for quizbuilder to work  
+ */
+
 $(document).ready(function() {
 	$(".edit").click(function(){
 		var editID = $(this).attr("id");

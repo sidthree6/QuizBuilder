@@ -1,4 +1,11 @@
 <?php
+/*
+ * Made By: Siddharth Panchal & Dylan Burnham
+ * 
+ * File Name: genXML.php
+ * 
+ * Description: Json File which output quiz question in json format which is captured by ajax.  
+ */
 session_start();
 header('Content-Type: application/json');
 include("db.php");
@@ -11,6 +18,7 @@ $username = "";
 
 if(isset($_SESSION['u_name']))
 {
+	// Check is user is logged in.
 	$query = $db->prepare("SELECT * FROM quiz_member WHERE username = :username");
 	$query->bindParam(":username",$_SESSION['u_name']);
 	$query->execute();
@@ -26,8 +34,6 @@ if(isset($_SESSION['u_name']))
 	
 	if($result->type == 1)
 		$isAdmin = 1;
-		
-	//User Create New Catagory
 	
 }
 else
@@ -39,8 +45,8 @@ if(!isset($_GET['id']))
 	header("location: index.php");
 
 $id = mysql_real_escape_string(stripslashes(trim($_GET['id'])));
-
+// Get the quiz contents with id supplied
 $array = $db->query("SELECT * FROM quiz_quizes WHERE cid=$id")->fetchAll(PDO::FETCH_ASSOC);
-
+// Encode the data returned by query into json
 echo json_encode($array);
 ?>
